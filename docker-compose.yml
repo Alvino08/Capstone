@@ -1,31 +1,3 @@
-# services:
-#   app:
-#     build: .
-#     container_name: sumai-app
-#     volumes:
-#       - .:/var/www/html
-#     ports:
-#       - "8000:80"
-#     depends_on:
-#       - queue
-#     command: >
-#       sh -c "php artisan migrate && php artisan serve --host=0.0.0.0 --port=80"
-#     environment:
-#       - DB_CONNECTION=sqlite
-#       - DB_DATABASE=/var/www/html/database/database.sqlite
-
-#   queue:
-#     build: .
-#     container_name: sumai-queue
-#     volumes:
-#       - .:/var/www/html
-#     command: >
-#       sh -c "
-#         composer install &&
-#         php artisan storage:link &&
-#         php artisan migrate &&
-#         php artisan queue:work
-#       "
 version: '3.8'
 
 services:
@@ -36,16 +8,15 @@ services:
     container_name: laravel-app
     volumes:
       - ./summarizer:/var/www/html
-      - ./.env:/var/www/html/.env
     depends_on:
       - mysql
     environment:
-      - DB_CONNECTION=mysql
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=laravel
-      - DB_USERNAME=root
-      - DB_PASSWORD=Alvino098101.
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: laravel
+      DB_USERNAME: root
+      DB_PASSWORD: password123
     command: sh /usr/local/bin/start.sh
     networks:
       - laravel
@@ -82,6 +53,3 @@ volumes:
 
 networks:
   laravel:
-
-
-

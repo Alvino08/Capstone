@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Wait for MySQL to be ready
+# Wait for MySQL
 until mysqladmin ping -h"$DB_HOST" --silent; do
   echo "Waiting for database connection..."
   sleep 2
@@ -11,6 +11,7 @@ php artisan migrate --force
 php artisan storage:link
 php artisan config:cache
 php artisan route:cache
+php artisan view:cache
 
-# Run php-fpm
+# Start PHP-FPM
 php-fpm
