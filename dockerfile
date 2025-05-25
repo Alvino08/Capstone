@@ -43,34 +43,28 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    unzip \
-    curl \
-    git \
-    libzip-dev \
-    nodejs \
-    npm \
+    zip unzip curl git \
+    nodejs npm \
     default-mysql-client
 
-# PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
-
-# Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working dir
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy Laravel project from ./summarizer
-COPY summarizer/ .
+# Copy application
+COPY ./app /var/www/html
 
 # Install dependencies
-RUN composer install
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN npm install && npm run build
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
 
-EXPOSE 9000
-CMD ["php-fpm"]
+# Copy custom startup script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
 
