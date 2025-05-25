@@ -54,7 +54,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy application
-COPY ./app /var/www/html
+COPY ./summarizer /var/www/html
 
 # Install dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader

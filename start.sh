@@ -9,6 +9,8 @@ done
 # Laravel setup
 php artisan migrate --force
 php artisan storage:link
+php artisan config:cache
+php artisan route:cache
 
 # Run php-fpm
 php-fpm

@@ -36,6 +36,7 @@ services:
     container_name: laravel-app
     volumes:
       - ./app:/var/www/html
+      - ./.env:/var/www/html/.env
     depends_on:
       - mysql
     environment:
@@ -44,7 +45,7 @@ services:
       - DB_PORT=3306
       - DB_DATABASE=laravel
       - DB_USERNAME=root
-      - DB_PASSWORD=password123
+      - DB_PASSWORD=Alvino098101.
     command: sh /usr/local/bin/start.sh
     networks:
       - laravel
