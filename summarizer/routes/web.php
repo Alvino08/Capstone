@@ -8,14 +8,6 @@ use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\RiwayatController;
 
-// Route::get('/', function () {
-//     return view('dashboard');
-// });
-
-// Route::get('/dashboard', function(){
-//     return view('dashboard');
-// });
-
 
 Route::get('/favicon.ico', function () {
     return response()->file(public_path('favicon.ico'));
@@ -58,7 +50,7 @@ Route::get('/berita', [NewsController::class, 'index'])->name('berita');
 Route::get('/artikel/{slug}', [NewsController::class, 'show']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest');

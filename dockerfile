@@ -19,14 +19,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy application code
-COPY ./summarizer/. .
+COPY --chown=www-data:www-data ./summarizer/. .
 
-
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html
-
-# Copy startup script
-COPY start.sh /usr/local/bin/start.sh
+# Copy startup script with ownership
+COPY --chown=www-data:www-data start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Expose port 8000
