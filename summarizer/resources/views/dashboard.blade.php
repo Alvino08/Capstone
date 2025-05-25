@@ -37,9 +37,9 @@
         </div>
 
         <!-- Tombol -->
-        <button class="mt-10 w-[243px] h-[65px] bg-[#2563EB] text-white rounded-[10px] hover:bg-blue-900 transition-all font-inter font-medium text-[20px]">
-            Rangkum
-        </button>
+        <a href="/rangkuman" class="mt-10 inline-flex items-center justify-center w-[243px] h-[65px] bg-[#2563EB] text-white rounded-[10px] hover:bg-blue-900 transitiansition-all font-inter font-medium text-[20px]">
+                Rangkum
+        </a>
     </div>
 
     <!-- Berita Terkini -->
@@ -51,7 +51,7 @@
                 {{-- <img src="{{ asset($item->img ?? 'images/default-news.jpg') }}" alt="Gambar Berita" class="w-full max-w-[374px] h-[181px] rounded-[10px] object-cover" /> --}}
                 <img src="{{ asset('storage/' . $item->img) }}" alt="Gambar Berita" class="w-full max-w-[374px] h-[181px] rounded-[10px] object-cover" />
                 <div class="bg-white w-full max-w-[374px] h-[111px] rounded-[10px] border border-black p-[13px] -mt-10">
-                    <p class="font-bold text-[18px] md:text-[20px] leading-6">{{ Str::limit($item->title, 70) }}</p>
+                    <p class="font-bold text-[18px] md:text-[20px] leading-6">{{ Str::limit($item->title, 40) }}</p>
                     <p class="text-[15px] mt-3 text-blue-600 hover:underline">
                         <a href="/artikel/{{ $item->slug }}">Baca Rangkuman</a>
                     </p>
