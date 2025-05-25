@@ -1,39 +1,3 @@
-# FROM php:8.2-fpm
-
-# # Install deps
-# RUN apt-get update && apt-get install -y \
-#     build-essential \
-#     libpng-dev \
-#     libonig-dev \
-#     libxml2-dev \
-#     zip \
-#     unzip \
-#     curl \
-#     sqlite3 \
-#     libsqlite3-dev \
-#     git \
-#     nodejs \
-#     npm
-
-# # Install Composer
-# COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# # Setup working dir
-# WORKDIR /var/www/html
-
-# # Copy app
-# COPY . .
-
-# # Install dependencies
-# RUN composer install
-# RUN npm install && npm run build
-
-# # Set permissions
-# RUN chown -R www-data:www-data /var/www/html
-
-# # Expose port
-# EXPOSE 8000
-# CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 FROM php:8.2-fpm
 
 # Install dependencies
@@ -46,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     nodejs npm \
     default-mysql-client
 
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -53,11 +19,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy application code
-COPY ./summarizer/. /var/www/html
+COPY ./summarizer/. .
 
-# Install Laravel dependencies
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-RUN npm install && npm run build
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html
@@ -65,6 +28,12 @@ RUN chown -R www-data:www-data /var/www/html
 # Copy startup script
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
+
+# Expose port 8000
+EXPOSE 8000
+
+# Set default command
+CMD ["/usr/local/bin/start.sh"]
 
 
 
